@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight, FaCalendarAlt, FaUsers, FaInfoCircle, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { BsCalendarCheck } from 'react-icons/bs';
+import Typewriter from './Typewriter';
 import '../styles/MinistryPage.css';
+import '../styles/Typewriter.css';
 
 const MinistryLayout = ({ 
   title, 
@@ -30,7 +32,9 @@ const MinistryLayout = ({
         <div className="overlay"></div>
         <div className="container">
           <h1>{title || fullName}</h1>
-          <p>{description}</p>
+          <p className="ministry-description">
+            <Typewriter text={description} speed={60} />
+          </p>
         </div>
       </section>
 

@@ -356,23 +356,6 @@ const Home = () => {
             animate={controls}
           >
             <motion.div className="welcome-text" variants={item}>
-              <div style={{
-                display: 'block',
-                position: 'relative',
-                color: '#1a4d8f',
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                margin: '0 auto 1.5rem',
-                textTransform: 'uppercase',
-                letterSpacing: '3px',
-                padding: '0 0 10px 0',
-                border: 'none',
-                lineHeight: '1.2',
-                fontFamily: 'Montserrat, sans-serif',
-                textAlign: 'center',
-                width: '100%',
-                maxWidth: '80%'
-              }}>Welcome to Our Church</div>
               <h2 className="section-title">A Place to Belong, Believe and Become</h2>
               <p className="lead">At St. Jude's Anglican Church, we are a diverse community united by our faith in Jesus Christ. Our mission is to make disciples who love God, love others, and serve the world.</p>
               

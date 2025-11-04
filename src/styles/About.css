@@ -7,6 +7,257 @@
   --tab-hover-color: #495057;
   --tab-border-radius: 8px;
   --tab-transition: all 0.3s ease;
+  --accent-color: #f8b400;
+  --primary-light: #3a6daf;
+  --primary-lighter: #e6f0ff;
+  --text-light: #f8f9fa;
+  --transition: all 0.3s ease;
+}
+
+/* Hero Section */
+.about-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 0;
+  background: linear-gradient(135deg, #1a4d8f 0%, #2a77de 100%);
+  color: white;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgMGgxMDB2MTAwSDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTUwIDUwYzAgMTMuODA3LTExLjE5MyAyNS0yNSAyNVMwIDYzLjgwNyAwIDUwczExLjE5My0yNSAyNS0yNXMxNSAxMS4xOTMgMTUgMjV6IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.hero-subtitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--accent-color, #f8b400);
+  border-radius: 3px;
+}
+
+.hero-title {
+  margin: 0.5rem 0 1.5rem !important;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-title .church-abbr {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+.hero-title .church-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0.5rem 0;
+  line-height: 1.1;
+}
+
+.hero-description {
+  font-size: 1.4rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 1.5rem auto 2.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  padding: 0 1rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+
+.hero-cta .btn {
+  padding: 0.875rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hero-cta .btn-primary {
+  background: var(--accent-color, #f8b400);
+  color: #1a4d8f;
+  border: 2px solid var(--accent-color, #f8b400);
+}
+
+.hero-cta .btn-primary:hover {
+  background: transparent;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hero-cta .btn-outline-light {
+  background: transparent;
+  color: white !important;
+  border: 2px solid white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-cta .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  color: white !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .about-hero {
+    min-height: 80vh;
+    padding: 100px 0;
+  }
+  
+  .hero-title .church-abbr {
+    font-size: 2.5rem;
+  }
+  
+  .hero-title .church-name {
+    font-size: 3.5rem;
+  }
+  
+  .hero-description {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    min-height: 90vh;
+    padding: 80px 0;
+  }
+  
+  .hero-title .church-abbr {
+    font-size: 2.2rem;
+  }
+  
+  .hero-title .church-name {
+    font-size: 3rem;
+  }
+  
+  .hero-description {
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .hero-cta .btn {
+    width: 80%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    min-height: 100vh;
+    padding: 60px 0;
+  }
+  
+  .hero-title .church-abbr {
+    font-size: 1.8rem;
+  }
+  
+  .hero-title .church-name {
+    font-size: 2.5rem;
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+  }
+  
+  .hero-cta .btn {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
 }
 
 /* Tab Navigation */

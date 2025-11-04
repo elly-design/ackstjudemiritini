@@ -68,7 +68,8 @@ const KAMA = () => {
   ];
 
   return (
-    <MinistryLayout {...ministryData}>
+    <div data-ministry="kama">
+      <MinistryLayout {...ministryData}>
       {/* History Section */}
       <section className="history-section section-padding">
         <div className="container">
@@ -166,7 +167,8 @@ const KAMA = () => {
           </div>
         </div>
       </section>
-    </MinistryLayout>
+      </MinistryLayout>
+    </div>
   );
 };
 

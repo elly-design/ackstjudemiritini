@@ -22,13 +22,14 @@
 /* Hero Section */
 .ministry-hero {
   position: relative;
-  padding: 8rem 0 6rem;
+  padding: 10rem 0 8rem;
   color: white;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .ministry-hero .overlay {
@@ -38,9 +39,9 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    to bottom,
-    rgba(10, 31, 58, 0.9) 0%,
-    rgba(26, 77, 143, 0.85) 100%
+    135deg,
+    rgba(26, 77, 143, 0.9) 0%,
+    rgba(42, 119, 222, 0.8) 100%
   );
   z-index: 1;
 }
@@ -48,31 +49,70 @@
 .ministry-hero .container {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+  padding: 0 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ministry-hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.5px;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .ministry-hero .full-name {
   display: block;
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-top: 0.5rem;
-  opacity: 0.9;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
 }
 
 .ministry-hero p {
-  font-size: 1.25rem;
-  line-height: 1.6;
-  max-width: 700px;
-  margin: 0 auto;
-  opacity: 0.95;
+  font-size: 1.4rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  padding: 0 1rem;
+}
+
+/* Specific styles for KAMA page */
+.ministry-page[data-ministry="kama"] .ministry-hero {
+  background-image: linear-gradient(135deg, #1a4d8f 0%, #2a77de 100%);
+}
+
+.ministry-page[data-ministry="kama"] .ministry-hero h1 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ministry-page[data-ministry="kama"] .ministry-hero p {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
 }
 
 /* Main Content Layout */
