@@ -616,25 +616,7 @@ const Footer = () => {
             }}>
               &copy; {currentYear} St. Jude Miritini Anglican Church. All Rights Reserved.
             </p>
-            <div className="footer-credits" style={{
-              fontSize: '0.7rem',
-              color: 'rgba(255, 255, 255, 0.6)',
-              marginTop: '0.25rem'
-            }}>
-              <p style={{ 
-                margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem'
-              }}>
-                <span>Designed &amp; Engineered by</span>
-                <span style={{
-                  color: 'var(--footer-accent)',
-                  fontWeight: 500
-                }}>E.I Tech Innovations</span>
-              </p>
-            </div>
+            {/* Credits section removed */}
           </div>
         </div>
       </div>
