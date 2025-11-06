@@ -11,10 +11,10 @@ const About = () => {
   const leadershipTeam = [
     {
       id: 1,
-      name: 'Rev. John Mwangi',
+      name: 'Rev. Canon Richard Otieno',
       role: 'Vicar',
-      image: '/images/team/pastor.jpg',
-      bio: 'Rev. John has been serving as our Vicar since 2015. He is passionate about preaching the Gospel and shepherding the flock.'
+      image: '/images/richard.jpg',
+      bio: 'Rev. Canon Richard has been serving as our Vicar. He is passionate about preaching the Gospel and shepherding the flock.'
     },
     {
       id: 2,
