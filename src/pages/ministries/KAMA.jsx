@@ -15,7 +15,7 @@ const KAMA = () => {
     time: '8:00 AM - 10:00 AM',
     contact: '+254 700 000000',
     email: 'kama@ackstjude.org',
-    image: '/images/ministries/kama.jpg',
+    image: '/images/bible-scripture.jpg',
     details: {
       mission: 'To help men grow in spirit, mind, and body, and to nurture them in faith for every good work.',
       activities: [
@@ -69,7 +69,12 @@ const KAMA = () => {
 
   return (
     <div data-ministry="kama">
-      <MinistryLayout {...ministryData}>
+      <MinistryLayout 
+        {...ministryData}
+        style={{
+          '--hero-bg-image': 'url(/images/bible-scripture.jpg)'
+        }}
+      >
       {/* History Section */}
       <section className="history-section section-padding">
         <div className="container">

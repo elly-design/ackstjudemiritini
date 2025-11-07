@@ -36,7 +36,11 @@ const BoysBrigade = () => {
     time: '9:00 AM - 12:00 PM',
     contact: '+254 700 000003',
     email: 'boysbrigade@ackstjude.org',
-    image: '/images/ministries/boys-brigade.jpg',
+    image: '/images/boys.png',
+    style: {
+      '--hero-bg-image': 'url(/images/boys.png)',
+      '--hero-overlay': 'rgba(0, 0, 0, 0.5)'
+    },
     details: {
       motto: 'Sure & Steadfast',
       mottoVerse: 'Hebrews 6:19',

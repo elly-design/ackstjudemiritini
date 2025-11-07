@@ -49,7 +49,11 @@ const GFS = () => {
     time: '10:00 AM - 12:30 PM',
     contact: '+254 700 000004',
     email: 'gfs@ackstjude.org',
-    image: '/images/ministries/gfs.jpg',
+    image: '/images/girls.png',
+    style: {
+      '--hero-bg-image': 'url(/images/girls.png)',
+      '--hero-overlay': 'rgba(0, 0, 0, 0.5)'
+    },
     details: {
       motto: '“Bear Ye One Another’s Burdens and so Fulfill the Law of Christ.”',
       mottoVerse: 'Galatians 6:2',

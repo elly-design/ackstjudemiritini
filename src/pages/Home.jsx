@@ -121,17 +121,25 @@ const Home = () => {
     ),
     // Handle slide changes and focus management
     beforeChange: (current, next) => {
-      // Remove tabindex from all slides and make them not focusable
+      // Get all slides and their contents
       const allSlides = document.querySelectorAll('.slick-slide');
       const allSlideContents = document.querySelectorAll('.slick-slide > div');
       
+      // Update all slides
       allSlides.forEach((slide, index) => {
-        // Set aria-hidden based on active state
         const isActive = index === next;
-        slide.setAttribute('aria-hidden', !isActive);
+        
+        // Only update aria-hidden on the slide content, not the slide itself
+        // This prevents the aria-hidden conflict with focusable elements
+        const slideContent = slide.querySelector('.slick-slide > div');
+        if (slideContent) {
+          slideContent.setAttribute('aria-hidden', !isActive);
+        }
+        
+        // Update tabindex for keyboard navigation
         slide.setAttribute('tabindex', isActive ? '0' : '-1');
         
-        // Make all interactive elements in non-active slides not focusable
+        // Manage focusable elements in non-active slides
         if (!isActive) {
           const focusableElements = slide.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
           focusableElements.forEach(el => {
@@ -153,7 +161,13 @@ const Home = () => {
       
       slides.forEach((slide, index) => {
         const isActive = index === current;
-        slide.setAttribute('aria-hidden', !isActive);
+        
+        // Only update aria-hidden on the slide content, not the slide itself
+        const slideContent = slide.querySelector('.slick-slide > div');
+        if (slideContent) {
+          slideContent.setAttribute('aria-hidden', !isActive);
+        }
+        
         slide.setAttribute('tabindex', isActive ? '0' : '-1');
         
         // Make interactive elements in active slide focusable

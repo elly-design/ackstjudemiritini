@@ -15,7 +15,11 @@ const MothersUnion = () => {
     time: '2:00 PM - 4:00 PM',
     contact: '+254 700 000001',
     email: 'mothersunion@ackstjude.org',
-    image: '/images/ministries/mothers-union.jpg',
+    image: '/images/mother.jpeg',
+    style: {
+      '--hero-bg-image': 'url(/images/mother.jpeg)',
+      '--hero-overlay': 'rgba(0, 0, 0, 0.4)'
+    },
     details: {
       mission: 'To promote Christian family life and support marriage and parenting through prayer, service, and fellowship.',
       activities: [
