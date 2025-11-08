@@ -272,13 +272,13 @@ const Header = () => {
                   </li>
                 ))}
               </ul>
-              
-              <div className="cta-buttons">
-                <Link to="/give" className="btn btn-primary" onClick={closeAllMenus}>
-                  Give Online
-                </Link>
-              </div>
             </div>
+          </div>
+          
+          <div className="cta-buttons">
+            <Link to="/give" className="btn btn-primary" onClick={closeAllMenus}>
+              Give Online
+            </Link>
           </div>
         </div>
       </nav>
