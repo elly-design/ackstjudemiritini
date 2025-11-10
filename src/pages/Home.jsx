@@ -147,7 +147,7 @@ const Home = () => {
     );
   });
 
-  // Slider settings with enhanced accessibility and mobile support
+  // Simplified slider settings with proper accessibility
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -170,117 +170,41 @@ const Home = () => {
     edgeFriction: 0.35,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    // Custom slide component to handle accessibility
-    customPaging: (i) => (
-      <button aria-label={`Go to slide ${i + 1}`}>
-        <span className="sr-only">Go to slide {i + 1}</span>
-      </button>
-    ),
-    // Handle slide changes and focus management
+    // Use a simpler approach to manage focus and visibility
     beforeChange: (current, next) => {
-      // Get all slides and their contents
-      const allSlides = document.querySelectorAll('.slick-slide');
-      const allSlideContents = document.querySelectorAll('.slick-slide > div');
-      
-      // Update all slides
-      allSlides.forEach((slide, index) => {
+      const slides = document.querySelectorAll('.slick-slide');
+      slides.forEach((slide, index) => {
         const isActive = index === next;
-        
-        // Only update aria-hidden on the slide content, not the slide itself
-        // This prevents the aria-hidden conflict with focusable elements
-        const slideContent = slide.querySelector('.slick-slide > div');
-        if (slideContent) {
-          slideContent.setAttribute('aria-hidden', !isActive);
-        }
-        
-        // Update tabindex for keyboard navigation
-        slide.setAttribute('tabindex', isActive ? '0' : '-1');
-        
-        // Manage focusable elements in non-active slides
-        if (!isActive) {
-          const focusableElements = slide.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-          focusableElements.forEach(el => {
-            el.setAttribute('tabindex', '-1');
-            el.setAttribute('aria-hidden', 'true');
-          });
-        }
-      });
-      
-      // Ensure the slide content div has the correct aria-hidden state
-      allSlideContents.forEach((content, index) => {
-        content.setAttribute('aria-hidden', index !== next);
-      });
-    },
-    // Initialize tabindex on mount and after slide changes
-    afterChange: (current) => {
-      const slides = document.querySelectorAll('.slick-slide');
-      const slideContents = document.querySelectorAll('.slick-slide > div');
-      
-      slides.forEach((slide, index) => {
-        const isActive = index === current;
-        
-        // Only update aria-hidden on the slide content, not the slide itself
-        const slideContent = slide.querySelector('.slick-slide > div');
-        if (slideContent) {
-          slideContent.setAttribute('aria-hidden', !isActive);
-        }
-        
-        slide.setAttribute('tabindex', isActive ? '0' : '-1');
-        
-        // Make interactive elements in active slide focusable
-        if (isActive) {
-          const focusableElements = slide.querySelectorAll('button, [href], input, select, textarea, [tabindex="-1"]');
-          focusableElements.forEach(el => {
-            el.removeAttribute('aria-hidden');
-            // Only set tabindex to 0 if it was previously -1
-            if (el.getAttribute('tabindex') === '-1') {
-              el.setAttribute('tabindex', '0');
-            }
-          });
-        }
-      });
-      
-      // Ensure the slide content div has the correct aria-hidden state
-      slideContents.forEach((content, index) => {
-        content.setAttribute('aria-hidden', index !== current);
-      });
-      
-      // Set focus to the current slide for better keyboard navigation
-      if (slides[current]) {
-        slides[current].focus({ preventScroll: true });
-      }
-    },
-    // Initialize the slider with proper accessibility attributes
-    onInit: () => {
-      const slides = document.querySelectorAll('.slick-slide');
-      const slideContents = document.querySelectorAll('.slick-slide > div');
-      
-      slides.forEach((slide, index) => {
-        const isActive = index === 0; // First slide is active by default
-        slide.setAttribute('role', 'tabpanel');
-        slide.setAttribute('aria-roledescription', 'slide');
-        slide.setAttribute('aria-label', `Slide ${index + 1}`);
         slide.setAttribute('aria-hidden', !isActive);
         slide.setAttribute('tabindex', isActive ? '0' : '-1');
         
-        // Make only the active slide's content focusable
-        if (!isActive) {
-          const focusableElements = slide.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-          focusableElements.forEach(el => {
-            el.setAttribute('tabindex', '-1');
-            el.setAttribute('aria-hidden', 'true');
-          });
+        // Set visibility to ensure proper stacking context
+        if (isActive) {
+          slide.style.visibility = 'visible';
+          slide.style.position = 'relative';
+          slide.style.zIndex = '1';
+        } else {
+          slide.style.visibility = 'hidden';
+          slide.style.position = 'absolute';
+          slide.style.zIndex = '0';
         }
       });
-      
-      // Set initial aria-hidden state for slide contents
-      slideContents.forEach((content, index) => {
-        content.setAttribute('aria-hidden', index !== 0);
-      });
     },
+    afterChange: (current) => {
+      const slides = document.querySelectorAll('.slick-slide');
+      const currentSlide = slides[current];
+      if (currentSlide) {
+        currentSlide.focus({ preventScroll: true });
+      }
+    },
+    customPaging: (i) => (
+      <button type="button" aria-label={`Go to slide ${i + 1}`}>
+        <span className="sr-only">Go to slide {i + 1}</span>
+      </button>
+    ),
     appendDots: dots => (
       <div className="slick-dots" role="tablist" aria-label="Carousel navigation">
-        <ul style={{ display: 'flex' }}>{dots}</ul>
+        <ul style={{ display: 'flex', justifyContent: 'center', margin: 0, padding: 0 }}>{dots}</ul>
       </div>
     )
   };
@@ -382,6 +306,40 @@ const Home = () => {
   const getMonthName = (date) => {
     return date.toLocaleString('default', { month: 'short' });
   };
+
+  // Set up the carousel after component mounts
+  useEffect(() => {
+    // Initialize slides with proper ARIA attributes
+    const slides = document.querySelectorAll('.slick-slide');
+    slides.forEach((slide, index) => {
+      slide.setAttribute('role', 'tabpanel');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', `Slide ${index + 1}`);
+      slide.setAttribute('aria-hidden', index !== 0);
+      slide.setAttribute('tabindex', index === 0 ? '0' : '-1');
+      
+      // Set initial visibility
+      if (index === 0) {
+        slide.style.visibility = 'visible';
+        slide.style.position = 'relative';
+        slide.style.zIndex = '1';
+      } else {
+        slide.style.visibility = 'hidden';
+        slide.style.position = 'absolute';
+        slide.style.zIndex = '0';
+      }
+    });
+    
+    // Cleanup function
+    return () => {
+      // Reset styles when component unmounts
+      slides.forEach(slide => {
+        slide.removeAttribute('style');
+        slide.removeAttribute('aria-hidden');
+        slide.removeAttribute('tabindex');
+      });
+    };
+  }, []);
 
   return (
     <div className="home">

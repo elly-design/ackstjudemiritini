@@ -141,26 +141,28 @@ const Footer = () => {
               </div>
             </div>
             <p style={{
-              fontSize: '0.75rem',
-              lineHeight: '1.5',
+              fontSize: '0.85rem',
+              lineHeight: '1.6',
               color: 'var(--footer-text)',
-              opacity: 0.85,
-              margin: '10px 0 0',
-              maxWidth: '250px'
+              opacity: 0.9,
+              margin: '10px auto 0',
+              maxWidth: '280px',
+              textAlign: 'center',
+              padding: '0 10px'
             }}>
               A vibrant community of believers dedicated to worship, fellowship 
               and service in the Anglican tradition.
             </p>
             
             <div className="footer-social" style={{
-              marginTop: '0.75rem',
-              paddingTop: '0.75rem',
+              marginTop: '0.25rem',
+              paddingTop: '0.25rem',
               borderTop: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
               <div className="social-links" style={{
                 display: 'flex',
                 gap: '0.75rem',
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 alignItems: 'center'
               }}>
                 <a 
