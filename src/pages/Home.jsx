@@ -491,7 +491,7 @@ const Home = () => {
           >
             <motion.div className="welcome-text" variants={item}>
               <h2 className="section-title">A Place to Belong, Believe and Become</h2>
-              <p className="lead">At St. Jude's Anglican Church, we are a diverse community united by our faith in Jesus Christ. Our mission is to make disciples who love God, love others, and serve the world.</p>
+              <p className="lead">At St. Jude Miritini Anglican Church, we are a diverse community united by our faith in Jesus Christ. Our mission is to make disciples who love God, love others, and serve the world.</p>
               
               <div className="welcome-features">
                 <div className="feature">
