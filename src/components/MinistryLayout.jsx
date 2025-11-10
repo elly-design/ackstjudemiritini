@@ -32,9 +32,9 @@ const MinistryLayout = ({
         <div className="overlay"></div>
         <div className="container">
           <h1>{title || fullName}</h1>
-          <p className="ministry-description">
+          <div className="ministry-description">
             <Typewriter text={description} speed={60} />
-          </p>
+          </div>
         </div>
       </section>
 
@@ -98,7 +98,9 @@ const MinistryLayout = ({
                   <FaUsers className="detail-icon" />
                   <div>
                     <p className="detail-label">Leaders</p>
-                    <p>{details.leaders}</p>
+                    <div className="leaders-content">
+                      {details.leaders}
+                    </div>
                   </div>
                 </div>
               )}

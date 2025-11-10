@@ -27,10 +27,14 @@ const KAYO = () => {
         'Annual youth conferences and camps'
       ],
       requirements: 'Ages 13-35 years',
-      leaders: <div className="leaders-list">
-        <div>David Kimani (Chairperson)</div>
-        <div>Sarah Muthoni (Secretary)</div>
-      </div>
+      leaders: (
+        <>
+          <div className="leaders-list">
+            <div>David Kimani (Chairperson)</div>
+            <div>Sarah Muthoni (Secretary)</div>
+          </div>
+        </>
+      )
     }
   };
 
