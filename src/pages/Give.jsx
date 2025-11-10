@@ -1,0 +1,135 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaArrowLeft, FaMobileAlt, FaMoneyBillWave, FaCreditCard } from 'react-icons/fa';
+import './Give.css';
+
+const Give = () => {
+  const [activeTab, setActiveTab] = useState('mpesa');
+
+  return (
+    <div className="give-page">
+      <div className="give-container">
+        <Link to="/" className="back-link">
+          <FaArrowLeft /> Back to Home
+        </Link>
+        
+        <div className="give-header">
+          <h1>Give Online</h1>
+          <p>Your generous giving helps us spread the Gospel and serve our community.</p>
+        </div>
+
+        <div className="give-tabs">
+          <button 
+            className={`tab-button ${activeTab === 'mpesa' ? 'active' : ''}`}
+            onClick={() => setActiveTab('mpesa')}
+          >
+            <FaMobileAlt className="tab-icon" /> M-Pesa
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'card' ? 'active' : ''}`}
+            onClick={() => setActiveTab('card')}
+          >
+            <FaCreditCard className="tab-icon" /> Credit/Debit Card
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'bank' ? 'active' : ''}`}
+            onClick={() => setActiveTab('bank')}
+          >
+            <FaMoneyBillWave className="tab-icon" /> Bank Transfer
+          </button>
+        </div>
+
+        <div className="tab-content">
+          {activeTab === 'mpesa' && (
+            <div className="mpesa-payment">
+              <div className="mpesa-instructions">
+                <h2>Give via M-Pesa</h2>
+                <p>Use the following details to make your donation via M-Pesa:</p>
+                
+                <div className="mpesa-details">
+                  <div className="detail-item">
+                    <span className="detail-label">Paybill Number:</span>
+                    <span className="detail-value">522533</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Account Number:</span>
+                    <span className="detail-value">9500066</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Account Name:</span>
+                    <span className="detail-value">ACK St. Jude Miritini</span>
+                  </div>
+                </div>
+
+                <div className="mpesa-steps">
+                  <h3>How to Pay:</h3>
+                  <ol>
+                    <li>Go to M-Pesa on your phone</li>
+                    <li>Select <strong>Lipa na M-Pesa</strong></li>
+                    <li>Select <strong>Pay Bill</strong></li>
+                    <li>Enter Business No: <strong>522533</strong></li>
+                    <li>Enter Account No: <strong>9500066</strong></li>
+                    <li>Enter the Amount</li>
+                    <li>Enter your M-Pesa PIN and press OK</li>
+                    <li>You will receive a confirmation message</li>
+                  </ol>
+                </div>
+              </div>
+              
+              <div className="mpesa-image-container">
+                <img 
+                  src="/images/mpesa.png" 
+                  alt="M-Pesa Payment" 
+                  className="mpesa-image"
+                  onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = 'https://via.placeholder.com/400x600?text=M-Pesa+Payment';
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'card' && (
+            <div className="card-payment">
+              <h2>Coming Soon</h2>
+              <p>Credit and debit card payments will be available soon. Please use M-Pesa or bank transfer for now.</p>
+            </div>
+          )}
+
+          {activeTab === 'bank' && (
+            <div className="bank-transfer">
+              <h2>Bank Transfer</h2>
+              <p>For bank transfers, please use the following details:</p>
+              <div className="bank-details">
+                <div className="detail-item">
+                  <span className="detail-label">Bank:</span>
+                  <span className="detail-value">To be updated</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Account Name:</span>
+                  <span className="detail-value">ACK St. Jude Miritini</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Account Number:</span>
+                  <span className="detail-value">To be updated</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Branch:</span>
+                  <span className="detail-value">To be updated</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="giving-note">
+          <p>Thank you for your generous giving. Your support helps us continue our mission and ministry.</p>
+          <p>For any assistance, please contact us at <a href="tel:+254712345678">+254 712 345 678</a> or <a href="mailto:info@ackstjudemiritini.org">info@ackstjudemiritini.org</a></p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Give;

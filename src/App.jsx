@@ -17,6 +17,7 @@ import MothersUnion from './pages/ministries/MothersUnion';
 import KAYO from './pages/ministries/KAYO';
 import BoysBrigade from './pages/ministries/BoysBrigade';
 import GFS from './pages/ministries/GFS';
+import Give from './pages/Give.jsx';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/give" element={<Give />} />
         </Routes>
       </main>
       <Footer />

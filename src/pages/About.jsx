@@ -171,20 +171,20 @@ const About = () => {
         <div className="hero-content">
           <div className="container">
             <div className="hero-text">
-              <span className="hero-subtitle">Experience</span>
               <h1 className="hero-title" style={{
                 textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
                 color: '#fff',
                 position: 'relative',
-                display: 'inline-block',
-                fontSize: 'clamp(2rem, 5vw, 3rem)',
-                marginBottom: '1rem'
+                display: 'block',
+                fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                margin: '0 0 1.5rem',
+                fontWeight: '700',
+                lineHeight: '1.2',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
               }}>
-                ACK St. Jude
+                Get to Know Us
               </h1>
-              <p className="hero-description">
-                A vibrant community of faith, hope and love where lives are transformed through the power of the Gospel.
-              </p>
               <div className="hero-cta">
                 <Link to="/visit" className="btn btn-primary">
                   Plan Your Visit <FaArrowRight className="ms-2" />
