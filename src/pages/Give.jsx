@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaMobileAlt, FaMoneyBillWave, FaCreditCard } from 'react-icons/fa';
+import { FaArrowLeft, FaMobileAlt, FaMoneyBillWave } from 'react-icons/fa';
 import './Give.css';
 
 const Give = () => {
-  const [activeTab, setActiveTab] = useState('mpesa');
+  const [activeTab, setActiveTab] = useState('mpesa'); // Only 'mpesa' and 'bank' tabs remain
 
   return (
     <div className="give-page">
@@ -24,12 +24,6 @@ const Give = () => {
             onClick={() => setActiveTab('mpesa')}
           >
             <FaMobileAlt className="tab-icon" /> M-Pesa
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'card' ? 'active' : ''}`}
-            onClick={() => setActiveTab('card')}
-          >
-            <FaCreditCard className="tab-icon" /> Credit/Debit Card
           </button>
           <button 
             className={`tab-button ${activeTab === 'bank' ? 'active' : ''}`}
@@ -87,13 +81,6 @@ const Give = () => {
                   }}
                 />
               </div>
-            </div>
-          )}
-
-          {activeTab === 'card' && (
-            <div className="card-payment">
-              <h2>Coming Soon</h2>
-              <p>Credit and debit card payments will be available soon. Please use M-Pesa or bank transfer for now.</p>
             </div>
           )}
 
