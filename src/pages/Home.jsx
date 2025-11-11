@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import Slider from 'react-slick';
+import SimpleSlider from '../components/SimpleSlider';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "../styles/slick-overrides.css";
@@ -147,11 +147,15 @@ const Home = () => {
     );
   });
 
-  // Simplified slider settings with proper accessibility
+  // Track active slide state
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef(null);
+
+  // Slider settings with proper accessibility
   const sliderSettings = {
     dots: true,
     infinite: true,
-    speed: 600,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -163,38 +167,19 @@ const Home = () => {
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
     accessibility: true,
     focusOnSelect: false,
-    adaptiveHeight: true,
+    adaptiveHeight: false,
     draggable: true,
     swipe: true,
     touchThreshold: 5,
     edgeFriction: 0.35,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    // Use a simpler approach to manage focus and visibility
-    beforeChange: (current, next) => {
-      const slides = document.querySelectorAll('.slick-slide');
-      slides.forEach((slide, index) => {
-        const isActive = index === next;
-        slide.setAttribute('aria-hidden', !isActive);
-        slide.setAttribute('tabindex', isActive ? '0' : '-1');
-        
-        // Set visibility to ensure proper stacking context
-        if (isActive) {
-          slide.style.visibility = 'visible';
-          slide.style.position = 'relative';
-          slide.style.zIndex = '1';
-        } else {
-          slide.style.visibility = 'hidden';
-          slide.style.position = 'absolute';
-          slide.style.zIndex = '0';
-        }
-      });
-    },
+    beforeChange: (current, next) => setCurrentSlide(next),
     afterChange: (current) => {
+      // Focus for accessibility
       const slides = document.querySelectorAll('.slick-slide');
-      const currentSlide = slides[current];
-      if (currentSlide) {
-        currentSlide.focus({ preventScroll: true });
+      if (slides[current]) {
+        slides[current].focus({ preventScroll: true });
       }
     },
     customPaging: (i) => (
@@ -309,7 +294,7 @@ const Home = () => {
 
   // Set up the carousel after component mounts
   useEffect(() => {
-    // Initialize slides with proper ARIA attributes
+      // Initialize slides with proper ARIA attributes and styles
     const slides = document.querySelectorAll('.slick-slide');
     slides.forEach((slide, index) => {
       slide.setAttribute('role', 'tabpanel');
@@ -318,114 +303,33 @@ const Home = () => {
       slide.setAttribute('aria-hidden', index !== 0);
       slide.setAttribute('tabindex', index === 0 ? '0' : '-1');
       
-      // Set initial visibility
+      // Set initial visibility and styles
       if (index === 0) {
+        slide.style.opacity = '1';
         slide.style.visibility = 'visible';
         slide.style.position = 'relative';
-        slide.style.zIndex = '1';
+        slide.style.zIndex = '2';
+        slide.style.width = '100%';
+        slide.style.height = '100%';
+        slide.style.transition = 'opacity 1s ease-in-out';
       } else {
+        slide.style.opacity = '0';
         slide.style.visibility = 'hidden';
         slide.style.position = 'absolute';
-        slide.style.zIndex = '0';
+        slide.style.zIndex = '1';
+        slide.style.width = '100%';
+        slide.style.height = '100%';
+        slide.style.top = '0';
+        slide.style.left = '0';
       }
     });
-    
-    // Cleanup function
-    return () => {
-      // Reset styles when component unmounts
-      slides.forEach(slide => {
-        slide.removeAttribute('style');
-        slide.removeAttribute('aria-hidden');
-        slide.removeAttribute('tabindex');
-      });
-    };
   }, []);
 
   return (
     <div className="home">
       {/* Hero Slider */}
-      <section className="hero-slider" aria-roledescription="carousel" aria-label="Featured Content">
-        <Slider {...sliderSettings}>
-          <div 
-            className="slide slide-1" 
-            role="group" 
-            aria-roledescription="slide" 
-            aria-label="Slide 1 of 3"
-            tabIndex="-1"
-          >
-            <div className="slide-overlay" aria-hidden="true"></div>
-            <div className="container">
-              <motion.div 
-                className="slide-content"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.6, 
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: 0.1
-                }}
-              >
-                <span className="slide-pre-title">Welcome to</span>
-                <h1>St. Jude's Anglican Church</h1>
-                <p className="lead">Growing in Faith, Serving with Love, Building Community</p>
-                <div className="slide-buttons">
-                  <Link to="/about" className="btn btn-primary">
-                    Our Story <FaArrowRight className="btn-icon" aria-hidden="true" />
-                  </Link>
-                  <Link to="/what-we-believe" className="btn btn-outline">
-                    Our Beliefs
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-          <div className="slide slide-2" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3">
-            <div className="slide-overlay"></div>
-            <div className="container">
-              <motion.div 
-                className="slide-content"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                <span className="slide-pre-title">Experience</span>
-                <h1>Authentic Community</h1>
-                <p className="lead">Join us as we grow together in faith and service</p>
-                <div className="slide-buttons">
-                  <Link to="/ministries" className="btn btn-primary">
-                    Our Ministries <FaArrowRight className="btn-icon" />
-                  </Link>
-                  <Link to="/contact" className="btn btn-outline">
-                    Get Connected
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-          <div className="slide slide-3" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3">
-            <div className="slide-overlay"></div>
-            <div className="container">
-              <motion.div 
-                className="slide-content"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                <span className="slide-pre-title">Next Steps</span>
-                <h1>Start Your Journey</h1>
-                <p className="lead">Discover how you can get involved in our church family</p>
-                <div className="slide-buttons">
-                  <Link to="/new-here" className="btn btn-primary">
-                    I'm New Here
-                  </Link>
-                  <Link to="/baptism" className="btn btn-outline">
-                    Learn About Baptism
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </Slider>
+      <section className="hero-slider">
+        <SimpleSlider />
       </section>
 
       {/* Welcome Section */}
