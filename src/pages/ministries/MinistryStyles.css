@@ -71,6 +71,7 @@
   margin: 1.5rem auto;
   position: relative;
   border: none;
+  display: none;
 }
 
 /* History Section */
