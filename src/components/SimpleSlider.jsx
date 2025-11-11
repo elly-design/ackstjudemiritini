@@ -109,20 +109,38 @@ const SimpleSlider = () => {
       setIsMounted(true);
       // Force reflow to ensure proper rendering
       window.dispatchEvent(new Event('resize'));
+      
+      // Preload all slide images for smoother transitions
+      slides.forEach(slide => {
+        const img = new Image();
+        img.src = `/${slide.image}`;
+      });
     }, 100);
     return () => clearTimeout(timer);
   }, []);
 
+  // Custom slide component to prevent aria-hidden on active slide
+  const Slide = ({ children, isActive, ...props }) => (
+    <div 
+      {...props}
+      className={`slide ${isActive ? 'slick-active' : ''}`}
+      aria-hidden={!isActive}
+    >
+      {children}
+    </div>
+  );
+
   const settings = {
     dots: true,
     infinite: true,
-    speed: 800,
+    speed: 1200, // Slightly slower for a more deliberate transition
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 7000,
+    autoplaySpeed: 7000, // Show each slide for 7 seconds
     pauseOnHover: true,
     fade: true,
+    cssEase: 'cubic-bezier(0.65, 0, 0.35, 1)', // Smoother easing function
     arrows: true,
     accessibility: true,
     draggable: true,
@@ -130,6 +148,8 @@ const SimpleSlider = () => {
     swipeToSlide: true,
     touchThreshold: 10,
     edgeFriction: 0.3,
+    waitForAnimate: true,
+    pauseOnFocus: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     beforeChange: (_, next) => setCurrentSlide(next),
@@ -217,7 +237,8 @@ const SimpleSlider = () => {
     minHeight: isMobile ? '350px' : '500px',
     marginTop: '0',
     paddingTop: '0',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    willChange: 'transform' // Optimize for hardware acceleration
   };
 
   const slideContentStyle = {
@@ -226,23 +247,25 @@ const SimpleSlider = () => {
     width: '100%',
     maxWidth: '1200px',
     marginLeft: 'auto',
-    marginRight: 'auto'
+    marginRight: 'auto',
+    transition: 'opacity 0.5s ease-in-out',
+    willChange: 'opacity'
   };
 
   return (
     <div className="simple-slider" style={sliderStyle}>
       <Slider {...settings}>
-        {slides.map((slide) => (
-          <div 
-            key={slide.id} 
-            className="slide"
-            // Add tabIndex to make the slide focusable
-            tabIndex="-1"
-            // Add role and aria attributes for better screen reader support
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${slide.id} of ${slides.length}`}
-          >
+        {slides.map((slide, index) => {
+          const isActive = currentSlide === index;
+          return (
+            <Slide
+              key={slide.id}
+              isActive={isActive}
+              tabIndex={isActive ? 0 : -1}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Slide ${index + 1} of ${slides.length}`}
+            >
             <div 
               className="slide-bg"
               style={{
@@ -299,8 +322,9 @@ const SimpleSlider = () => {
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+            </Slide>
+          );
+        })}
       </Slider>
     </div>
   );
