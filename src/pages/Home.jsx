@@ -811,37 +811,41 @@ const Home = () => {
         <div className="container">
           <div className="sermon-content">
             <div className="sermon-media">
-              <div className="sermon-image">
-                <img src="/images/sermons/latest-sermon.jpg" alt="Latest Sermon" />
-                <div className="play-button">
-                  <span className="play-icon">▶</span>
-                </div>
+              <div className="sermon-video">
+                <iframe 
+                  width="100%" 
+                  height="315" 
+                  src="https://www.youtube.com/embed/5Co3rY25pek" 
+                  title="Featured Sermon" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen>
+                </iframe>
               </div>
             </div>
             <div className="sermon-details">
               <span className="section-subtitle">Featured Message</span>
-              <h2 className="section-title">The Power of Faith in Difficult Times</h2>
+              <h2 className="section-title">Christ the Blue Print</h2>
               <div className="sermon-meta">
                 <span className="meta-item">
                   <FaCalendarAlt className="meta-icon" />
-                  {formatDate(new Date())}
+                  23rd March, 2025
                 </span>
                 <span className="meta-item">
                   <FaUser className="meta-icon" />
-                  Rev. John Smith
+                  Rev. Canon Richard Otieno
                 </span>
                 <span className="meta-item">
                   <FaBook className="meta-icon" />
-                  Hebrews 11:1-6
+                  John 13:12-17
                 </span>
               </div>
               <p className="sermon-excerpt">
-                In this message, we explore how faith can sustain us through life's most challenging moments. 
-                Discover how to trust God's plan even when the path ahead seems uncertain.
+                Principles & Practices for Christian Leadership
               </p>
               <div className="sermon-actions">
-                <a href="#" className="btn btn-primary">
-                  Watch Now
+                <a href="https://youtu.be/5Co3rY25pek" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                  Watch on YouTube
                 </a>
                 <a href="#" className="btn btn-outline">
                   <FaHeadphones className="btn-icon" /> Listen
