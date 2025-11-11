@@ -31,7 +31,7 @@ const slides = [
   {
     id: 3,
     preTitle: 'Guided by the Holy Spirit',
-    title: 'Shine His Light',
+    title: 'Rooted in Christ',
     image: 'images/richard.jpg',
     buttons: [
       { text: "I'm New Here", to: '/new-here', variant: 'primary' },
