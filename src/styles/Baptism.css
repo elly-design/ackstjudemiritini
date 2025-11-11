@@ -16,6 +16,30 @@
   padding: 2rem;
 }
 
+/* Animation keyframes for background */
+@keyframes fadeInZoom {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+/* Animation keyframes for content */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .baptism-header {
   text-align: center;
   margin: -2rem -2rem 2rem -2rem;
@@ -43,6 +67,38 @@
   align-items: center;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  opacity: 0;
+  animation: fadeInZoom 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  
+  /* Smooth scaling on mobile */
+  @media (max-width: 768px) {
+    animation: fadeInZoom 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+    background-attachment: scroll;
+  }
+}
+
+/* Add animation to header content */
+.baptism-header > * {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Stagger animations for child elements */
+.baptism-header .pre-title {
+  animation-delay: 0.5s;
+}
+
+.baptism-header h1 {
+  animation-delay: 0.7s;
 }
 
 .pre-title {
