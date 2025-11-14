@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import './styles/slick-fix.css'; // Slick Carousel font fix
 import Home from './pages/Home.jsx';
@@ -45,6 +45,8 @@ function App() {
           <Route path="/give" element={<Give />} />
           <Route path="/visit" element={<Contact isVisitPage={true} />} />
           <Route path="/baptism" element={<Baptism />} />
+          {/* Redirect /beliefs to /about/beliefs */}
+          <Route path="/beliefs" element={<Navigate to="/about/beliefs" replace />} />
         </Routes>
       </main>
       <Footer />

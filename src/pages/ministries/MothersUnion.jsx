@@ -14,8 +14,8 @@ const MothersUnion = () => {
     description: 'A global Christian movement dedicated to supporting and strengthening family life through prayer, service, and community engagement.',
     meeting: 'Every Tuesday',
     time: '2:00 PM - 4:00 PM',
-    contact: '+254 700 000001',
-    email: 'mothersunion@ackstjude.org',
+    contact: '+254 745002529',
+    email: 'ackstjudemiritinichuch@gmail.com',
     image: '/images/mother.jpeg',
     style: {
       '--hero-bg-image': 'url(/images/mother.jpeg)',

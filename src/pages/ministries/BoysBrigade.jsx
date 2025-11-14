@@ -34,8 +34,8 @@ const BoysBrigade = () => {
     description: 'We have faith in young people and provide opportunities for children and young people to learn, grow and discover in a safe, fun and caring environment which is rooted in the Christian faith.',
     meeting: 'Every Saturday',
     time: '9:00 AM - 12:00 PM',
-    contact: '+254 700 000003',
-    email: 'boysbrigade@ackstjude.org',
+    contact: '+254 745002529',
+    email: 'ackstjudemiritinichuch@gmail.com',
     image: '/images/boys.png',
     style: {
       '--hero-bg-image': 'url(/images/boys.png)',

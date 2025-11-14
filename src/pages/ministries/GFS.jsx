@@ -47,8 +47,8 @@ const GFS = () => {
     description: 'Empowering girls and young women through faith, friendship and personal growth.',
     meeting: 'Every Saturday',
     time: '10:00 AM - 12:30 PM',
-    contact: '+254 700 000004',
-    email: 'gfs@ackstjude.org',
+    contact: '+254 745002529',
+    email: 'ackstjudemiritinichuch@gmail.com',
     image: '/images/girls.png',
     style: {
       '--hero-bg-image': 'url(/images/girls.png)',

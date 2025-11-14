@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaChurch, FaCross, FaUsers, FaHandsHelping, FaQuoteLeft, FaArrowRight } from 'react-icons/fa';
+import { FaChurch, FaCross, FaUsers, FaHandsHelping, FaQuoteLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { IoMdTime } from 'react-icons/io';
 import { GiChurch } from 'react-icons/gi';
 import { BsCalendarCheck } from 'react-icons/bs';
@@ -189,14 +189,40 @@ const About = () => {
 
   const [activeTab, setActiveTab] = useState('our-story');
   const [showPccLeaders, setShowPccLeaders] = useState(false);
+  const [showConstructionMission, setShowConstructionMission] = useState(false);
   const location = useLocation();
+
+  // Church construction mission content
+  const constructionMissionContent = [
+    "About Our Church Construction Mission",
+    "Across the world, God is raising communities that carry His light, His compassion and His truth. Our parish is one of those places planted by grace, growing by faith and now stepping into a defining moment in our kingdom journey. The construction of our new church is not simply a local project; it is a global calling. It is a sacred work that invites believers everywhere to join hands in building a sanctuary that will echo the praise of God for generations.",
+    "This house of worship will be a refuge for the broken, a training ground for disciples, a home for children of faith and a beacon of hope for our community and beyond. Every wall raised, every stone laid will testify of God's faithfulness and the unity of His people across nations, cultures and continents.",
+    "We believe that the Church of Christ is one body and when one part builds, the whole body stands stronger. That is why we open our hearts to friends, partners and believers around the world. Your prayers, your generosity and your love can cross oceans and borders to shape this holy place. Your giving becomes a legacy an eternal footprint in a mission that will touch lives, transform hearts and uplift families long after we are gone.",
+    "When you support this construction, you are not only helping us build a physical structure; you are participating in a divine assignment. You are investing in a sanctuary where worship will rise, where children will learn Christ, where the hungry will find compassion, where the lost will find direction and where communities will be restored.",
+    "We invite you to stand with us.",
+    "We invite you to give with us.",
+    "We invite you to build with us.",
+    "Be part of this global mission.",
+    "Be part of God's unfolding story.",
+    "Be part of a sanctuary that will shine Christ to the world.",
+    "Your partnership matters. Your gift has impact. Your faith builds futures."
+  ];
   
-  // Handle PCC leaders modal close
-  const handleClosePccLeaders = () => {
+  // Handle modals
+  const closeAllModals = () => {
     setShowPccLeaders(false);
-    // Restore body scroll when modal is closed
+    setShowConstructionMission(false);
     document.body.style.overflow = 'auto';
   };
+
+  const handleClosePccLeaders = () => closeAllModals();
+  
+  const handleOpenConstructionMission = () => {
+    setShowConstructionMission(true);
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const handleCloseConstructionMission = () => closeAllModals();
   
   // Handle PCC leaders modal open
   const handleOpenPccLeaders = () => {
@@ -321,8 +347,146 @@ const About = () => {
         </div>
       </section>
 
-     
-
+      {/* Construction Mission Modal */}
+      {showConstructionMission && (
+        <div className="modal-overlay" style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.92)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000,
+          padding: '20px',
+          overflowY: 'auto'
+        }}>
+          <div className="modal-content" style={{
+            backgroundColor: '#ffffff',
+            padding: '2.5rem',
+            borderRadius: '16px',
+            maxWidth: '880px',
+            width: '90%',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            position: 'relative',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            border: '1px solid #e0f2fe',
+            background: 'linear-gradient(to bottom right, #ffffff, #f8fafc)'
+          }}>
+            <button 
+              onClick={handleCloseConstructionMission}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'none',
+                border: 'none',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                color: '#666'
+              }}
+            >
+              <FaTimes />
+            </button>
+            
+            <div className="construction-mission-content" style={{ color: '#1a365d' }}>
+              <h2 style={{
+                background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                margin: '0 0 2rem 0',
+                textAlign: 'center',
+                fontSize: '2.2rem',
+                lineHeight: '1.3',
+                fontWeight: '800',
+                fontFamily: '"Poppins", sans-serif',
+                paddingBottom: '1rem',
+                borderBottom: '2px solid #dbeafe'
+              }}>
+                {constructionMissionContent[0]}
+              </h2>
+              
+              <div style={{ 
+                margin: '1.5rem 0',
+                fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+              }}>
+                {constructionMissionContent.slice(1).map((paragraph, index) => {
+                  const isHighlighted = index >= constructionMissionContent.length - 4;
+                  return (
+                    <p key={index} style={{
+                      margin: '0 0 1.8rem 0',
+                      fontSize: '1.05rem',
+                      lineHeight: '1.8',
+                      color: isHighlighted ? '#1e40af' : '#1f2937',
+                      fontWeight: isHighlighted ? '600' : '400',
+                      fontStyle: isHighlighted ? 'italic' : 'normal',
+                      textAlign: isHighlighted ? 'center' : 'left',
+                      letterSpacing: '0.01em',
+                      maxWidth: '800px',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      padding: isHighlighted ? '1.4rem' : '0',
+                      backgroundColor: isHighlighted ? '#eff6ff' : 'transparent',
+                      borderRadius: isHighlighted ? '12px' : '0',
+                      borderLeft: isHighlighted ? '4px solid #3b82f6' : 'none',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      boxShadow: isHighlighted ? '0 4px 6px -1px rgba(0, 0, 0, 0.05)' : 'none'
+                    }}>
+                      {paragraph}
+                    </p>
+                  );
+                })}
+              </div>
+              
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '2rem',
+                gap: '1rem',
+                flexWrap: 'wrap'
+              }}>
+                <Link 
+                  to="/give" 
+                  className="btn btn-primary"
+                  style={{
+                    backgroundColor: '#1a4d8f',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '4px',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onClick={handleCloseConstructionMission}
+                >
+                  Donate Now <FaArrowRight />
+                </Link>
+                <button 
+                  onClick={handleCloseConstructionMission}
+                  className="btn btn-outline"
+                  style={{
+                    border: '1px solid #1a4d8f',
+                    color: '#1a4d8f',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '4px',
+                    background: 'white',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Tab Content */}
       <div className="tab-content">
         {/* Our Story Tab */}
@@ -375,7 +539,7 @@ const About = () => {
               </div>
             </div>
             <div className="welcome-image">
-              <img src="images/church-building.jpg" alt="ACK St. Jude Church" />
+              <img src="/images/stjude.jpg" alt="ACK St. Jude Church" />
             </div>
           </div>
         </div>
@@ -432,9 +596,38 @@ His Word is our truth, His Spirit is our strength and His Kingdom is our calling
 
 In Christ, we live by faith, walk in power and shine His light to the world.
               </p>
-              <Link to="/beliefs" className="btn btn-outline">
-                Read More <FaArrowRight />
-              </Link>
+              <button 
+                onClick={handleOpenConstructionMission}
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.8rem 1.8rem',
+                  borderRadius: '8px',
+                  fontSize: '1.05rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  boxShadow: '0 4px 6px -1px rgba(37, 99, 235, 0.3), 0 2px 4px -1px rgba(37, 99, 235, 0.1)',
+                  transition: 'all 0.3s ease',
+                  fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  letterSpacing: '0.3px',
+                  textTransform: 'none',
+                  marginTop: '1rem'
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 6px -1px rgba(37, 99, 235, 0.3), 0 2px 4px -1px rgba(37, 99, 235, 0.1)';
+                }}
+              >
+                Read More About Our Construction Mission <FaArrowRight style={{ transition: 'transform 0.3s ease' }} />
+              </button>
             </div>
             <div className="statement-image">
               <img src="/images/stjude.jpg" alt="Bible Study" />

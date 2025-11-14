@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 
 // Animation variants
@@ -62,42 +62,65 @@ import '../styles/hero-buttons.css';
 
 // Beliefs Modal Component
 const BeliefsModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
+  const modalRef = useRef(null);
+
+  // Set mounted state when component mounts
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [isOpen]);
 
-  return ReactDOM.createPortal(
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '1rem',
-      backdropFilter: 'blur(4px)'
-    }} onClick={onClose}>
-      <div style={{
-        backgroundColor: 'white',
-        borderRadius: '12px',
-        maxWidth: '800px',
-        width: '100%',
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        position: 'relative',
-        padding: '2.5rem',
-        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)'
-      }} onClick={e => e.stopPropagation()}>
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
+    <div 
+      ref={modalRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '1rem',
+        backdropFilter: 'blur(4px)',
+        opacity: isOpen ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          maxWidth: '800px',
+          width: '100%',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          position: 'relative',
+          padding: '2.5rem',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)',
+          transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
+          opacity: isOpen ? 1 : 0
+        }}
+        onClick={e => e.stopPropagation()}
+      >
         <button 
           onClick={onClose}
           style={{

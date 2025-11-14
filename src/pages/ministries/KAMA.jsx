@@ -13,8 +13,8 @@ const KAMA = () => {
     description: 'A fellowship of men committed to spiritual growth, leadership development, and community service.',
     meeting: '1st & 3rd Sundays',
     time: '8:00 AM - 10:00 AM',
-    contact: '+254 700 000000',
-    email: 'kama@ackstjude.org',
+    contact: '+254 745002529',
+    email: 'ackstjudemiritinichuch@gmail.com',
     image: '/images/bible-scripture.jpg',
     details: {
       mission: 'To help men grow in spirit, mind, and body, and to nurture them in faith for every good work.',

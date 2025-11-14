@@ -388,7 +388,16 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
+  .welcome-content {
+    margin: 3rem 0;
+  }
+  
+  .welcome-image {
+    min-height: 200px;
+    max-width: 100%;
+  }
+  
   .about-hero {
     min-height: 80vh;
     padding: 90px 0;
@@ -1149,6 +1158,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   align-items: center;
+  margin: 4rem 0;
+  align-items: center;
 }
 
 .welcome-text p {
@@ -1205,16 +1216,19 @@
 
 .welcome-image {
   position: relative;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  min-height: 300px;
 }
 
 .welcome-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .welcome-image:hover img {
@@ -2346,6 +2360,14 @@
   .welcome-content,
   .statement-of-faith {
     grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .welcome-image {
+    order: -1;
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 250px;
   }
   
   .mission-vision {

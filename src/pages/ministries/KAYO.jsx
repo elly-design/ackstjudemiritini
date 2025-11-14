@@ -11,13 +11,13 @@ const KAYO = () => {
     description: 'The youth are the most energetic group both physically and emotionally. If their energies are tapped, harnessed and well utilized they can be a great blessing to church and society. If not, they are the most vulnerable group because their energies can be abused.',
     meeting: 'Every Friday',
     time: '4:30 PM - 6:30 PM',
-    contact: '+254 700 000002',
-    email: 'kayo@ackstjude.org',
+    contact: '+254 745002529',
+    email: 'ackstjudemiritinichuch@gmail.com',
     image: '/images/youth2.jpeg',
     details: {
       motto: 'Be strong in the Lord',
       vision: 'A growing, caring Anglican Youth boldly Proclaiming Christ.',
-      mission: 'To reach and Equip the Youth to Transform the society with the Gospel.',
+      mission: 'To reach and Equip the youth to Transform the Society with the Gospel',
       activities: [
         'Weekly fellowship and Bible study',
         'Talent development and mentorship programs',
@@ -39,7 +39,17 @@ const KAYO = () => {
   };
 
   return (
-    <MinistryLayout {...ministryData}>
+    <MinistryLayout 
+      title={ministryData.title}
+      fullName={ministryData.fullName}
+      description={ministryData.description}
+      meeting={ministryData.meeting}
+      time={ministryData.time}
+      contact={ministryData.contact}
+      email={ministryData.email}
+      image={ministryData.image}
+      details={ministryData.details}
+    >
       <section className="about-section">
         <div className="motto-box">
           <h3>Our Motto</h3>
@@ -52,8 +62,8 @@ const KAYO = () => {
             <p>{ministryData.details.vision}</p>
           </div>
           <div className="mission">
-            <h3>Mission</h3>
-            <p>{ministryData.details.mission}</p>
+            <h3>KAYO Promise</h3>
+            <p>I promise to serve Jesus Christ all the days of my life, pray and read the Bible daily, encourage other young people to join KAYO, and abide by its rules.</p>
           </div>
         </div>
 

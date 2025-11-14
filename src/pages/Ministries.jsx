@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   FaUsers, 
   FaHandsHelping, 
-  FaPray, 
+  FaPrayingHands, 
   FaCalendarAlt,
   FaFemale, 
   FaMale, 
@@ -13,7 +13,8 @@ import {
   FaHands,
   FaCross,
   FaBookOpen,
-  FaMusic
+  FaMusic,
+  FaPray
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -62,7 +63,7 @@ const Ministries = () => {
       cardClass: 'kama-card',
       icon: <FaMale className="ministry-icon" />,
       category: 'men',
-      contact: 'kama@ackstjude.org',
+      contact: 'ackstjudemiritinichuch@gmail.com',
       image: 'images/ministries/kama.jpg',
       color: '#1a4d8f',
       features: [
@@ -81,7 +82,7 @@ const Ministries = () => {
           'Family support initiatives'
         ],
         requirements: 'Open to all men 18 years and above',
-        leaders: 'John Mwangi (Chairman), Peter Kamau (Secretary)'
+        leaders: 'Bernard Righa (Chairman), Nicholas Mbogho (Secretary)'
       }
     },
     {
@@ -92,7 +93,7 @@ const Ministries = () => {
       description: 'A global Christian movement that has been supporting and promoting married life for decades through prayer, programs and practical support.',
       icon: <FaFemale className="ministry-icon" />,
       category: 'women',
-      contact: 'mothersunion@ackstjude.org',
+      contact: 'ackstjudemiritinichuch@gmail.com',
       image: 'images/ministries/mothers-union.jpg',
       color: '#8e44ad',
       features: [
@@ -122,7 +123,7 @@ const Ministries = () => {
       description: 'A dynamic movement of young Christians committed to spiritual growth, leadership development and community transformation through innovative programs and activities.',
       icon: <FaUsers className="ministry-icon" />,
       category: 'youth',
-      contact: 'kayo@ackstjude.org',
+      contact: 'ackstjudemiritinichuch@gmail.com',
       image: 'images/ministries/youth.jpg',
       color: '#e74c3c',
       features: [
@@ -131,7 +132,7 @@ const Ministries = () => {
         { icon: <FaUsers />, text: 'Fellowship' }
       ],
       details: {
-        mission: 'To nurture young people in the Christian faith, develop their leadership potential and empower them to be agents of positive change in their communities.',
+        'KAYO Promise': 'I promise to serve Jesus Christ all the days of my life, pray and read the Bible daily, encourage other young people to join KAYO, and abide by its rules.',
         activities: [
           'Weekly fellowship and Bible study sessions',
           'Talent development and mentorship programs',
@@ -141,7 +142,7 @@ const Ministries = () => {
           'Annual youth conferences and camps'
         ],
         requirements: 'Ages 18-35 years',
-        leaders: 'David Kimani (Chairperson), Sarah Muthoni (Secretary)'
+        leaders: 'Allan Odongo - Chairperson, Marion Wambui (Secretary)'
       }
     },
     {
@@ -152,7 +153,7 @@ const Ministries = () => {
       description: 'The world\'s first uniformed youth organization, providing a balanced program of activities for boys to develop physically, mentally and spiritually in a Christian environment.',
       icon: <FaMale className="ministry-icon" />,
       category: 'children',
-      contact: 'boysbrigade@ackstjude.org',
+      contact: 'ackstjudemiritinichuch@gmail.com',
       image: 'images/ministries/boys-brigade.jpg',
       color: '#27ae60',
       features: [
@@ -172,7 +173,7 @@ const Ministries = () => {
           'Annual competitions and awards'
         ],
         requirements: 'Boys aged 6-18 years',
-        leaders: 'Mr. James Mwangi (Captain), Mr. Peter Njoroge (Vice Captain)'
+        leaders: 'Elizabeth Mbogho - Chairperson, Pauline Chadwick - Secretary'
       }
     },
     {
@@ -183,7 +184,7 @@ const Ministries = () => {
       description: 'A global movement within the Anglican Church providing a safe space for girls to grow in faith, develop life skills and build lasting friendships in a Christian environment.',
       icon: <FaFemale className="ministry-icon" />,
       category: 'children',
-      contact: 'gfs@ackstjude.org',
+      contact: 'ackstjudemiritinichuch@gmail.com',
       image: 'images/ministries/gfs.jpg',
       color: '#e91e63',
       features: [
@@ -202,7 +203,7 @@ const Ministries = () => {
           'Annual rallies and conferences'
         ],
         requirements: 'Girls aged 5-25 years',
-        leaders: 'Mrs. Grace Wanjiru (President), Miss Ann Mumbi (Secretary)'
+        leaders: 'Elizabeth Mbogho - Chairperson, Pauline Chadwick - Secretary'
       }
     }
   ];
