@@ -253,8 +253,484 @@ const BeliefsModal = ({ isOpen, onClose }) => {
   );
 };
 
+// Appointment Modal Component
+const AppointmentModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubmitting, status }) => {
+  const [mounted, setMounted] = useState(false);
+  const modalRef = useRef(null);
+
+  // Set mounted state when component mounts
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
+    <div 
+      ref={modalRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '1rem',
+        backdropFilter: 'blur(4px)',
+        opacity: isOpen ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          maxWidth: '600px',
+          width: '100%',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          position: 'relative',
+          padding: '2.5rem',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.2)',
+          transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
+          opacity: isOpen ? 1 : 0
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '1rem',
+            right: '1rem',
+            background: 'none',
+            border: 'none',
+            fontSize: '1.5rem',
+            cursor: 'pointer',
+            color: '#64748b',
+            padding: '0.5rem',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.2s ease',
+            ':hover': {
+              backgroundColor: '#f1f5f9',
+              color: '#1e293b'
+            }
+          }}
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+        
+        <h2 style={{
+          fontSize: '2rem',
+          fontWeight: '800',
+          color: '#1e293b',
+          marginBottom: '1.5rem',
+          textAlign: 'center',
+          position: 'relative',
+          paddingBottom: '1rem'
+        }}>
+          Schedule a Meeting
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '80px',
+            height: '4px',
+            background: 'linear-gradient(90deg, #2563eb, #6366f1, #ec4899)',
+            borderRadius: '2px'
+          }}></div>
+        </h2>
+        
+        <p style={{
+          textAlign: 'center',
+          color: '#475569',
+          marginBottom: '2rem',
+          fontSize: '1.1rem'
+        }}>
+          Request an appointment with Rev. Richard
+        </p>
+
+        {status && (
+          <div style={{
+            padding: '1rem',
+            borderRadius: '8px',
+            marginBottom: '1.5rem',
+            backgroundColor: status.success ? '#dcfce7' : '#fee2e2',
+            color: status.success ? '#166534' : '#991b1b',
+            border: `1px solid ${status.success ? '#bbf7d0' : '#fecaca'}`,
+            textAlign: 'center'
+          }}>
+            {status.message}
+          </div>
+        )}
+
+        <form onSubmit={onSubmit}>
+          <div style={{
+            display: 'grid',
+            gap: '1.5rem',
+            marginBottom: '2rem'
+          }}>
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: '#374151'
+              }}>
+                Name *
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={onChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'all 0.3s ease',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb',
+                    boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                  }
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: '#374151'
+              }}>
+                Email *
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={onChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'all 0.3s ease',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb',
+                    boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                  }
+                }}
+              />
+            </div>
+
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: '#374151'
+              }}>
+                Phone
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={onChange}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'all 0.3s ease',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb',
+                    boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                  }
+                }}
+              />
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '1rem'
+            }}>
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  fontWeight: '600',
+                  color: '#374151'
+                }}>
+                  Preferred Date *
+                </label>
+                <input
+                  type="date"
+                  name="preferredDate"
+                  value={formData.preferredDate}
+                  onChange={onChange}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease',
+                    ':focus': {
+                      outline: 'none',
+                      borderColor: '#2563eb',
+                      boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                    }
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  fontWeight: '600',
+                  color: '#374151'
+                }}>
+                  Preferred Time *
+                </label>
+                <input
+                  type="time"
+                  name="preferredTime"
+                  value={formData.preferredTime}
+                  onChange={onChange}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease',
+                    ':focus': {
+                      outline: 'none',
+                      borderColor: '#2563eb',
+                      boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: '#374151'
+              }}>
+                Reason for Meeting *
+              </label>
+              <textarea
+                name="reason"
+                value={formData.reason}
+                onChange={onChange}
+                required
+                rows={4}
+                placeholder="Please describe why you'd like to meet with Rev. Richard..."
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  fontFamily: 'inherit',
+                  resize: 'vertical',
+                  transition: 'all 0.3s ease',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb',
+                    boxShadow: '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                  }
+                }}
+              />
+            </div>
+          </div>
+
+          <div style={{
+            display: 'flex',
+            gap: '1rem',
+            justifyContent: 'flex-end'
+          }}>
+            <button 
+              type="button"
+              onClick={onClose}
+              disabled={isSubmitting}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0.75rem 1.75rem',
+                backgroundColor: 'transparent',
+                color: '#2563eb',
+                border: '2px solid #2563eb',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                opacity: isSubmitting ? 0.5 : 1,
+                ':hover': {
+                  backgroundColor: isSubmitting ? 'transparent' : 'rgba(37, 99, 235, 0.05)',
+                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                }
+              }}
+            >
+              Cancel
+            </button>
+            
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0.75rem 1.75rem',
+                backgroundColor: isSubmitting ? '#94a3b8' : '#2563eb',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                opacity: isSubmitting ? 0.7 : 1,
+                ':hover': {
+                  backgroundColor: isSubmitting ? '#94a3b8' : '#1d4ed8',
+                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                }
+              }}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Request'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 const Home = () => {
   const [isBeliefsModalOpen, setIsBeliefsModalOpen] = useState(false);
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+  const [appointmentForm, setAppointmentForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    preferredDate: '',
+    preferredTime: '',
+    reason: ''
+  });
+  const [isSubmittingAppointment, setIsSubmittingAppointment] = useState(false);
+  const [appointmentStatus, setAppointmentStatus] = useState(null);
+
+  // Handle appointment form input changes
+  const handleAppointmentChange = (e) => {
+    const { name, value } = e.target;
+    setAppointmentForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle appointment form submission
+  const handleAppointmentSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmittingAppointment(true);
+    
+    try {
+      // Send appointment request to backend API
+      const response = await fetch('http://localhost:5001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: appointmentForm.name,
+          email: appointmentForm.email,
+          phone: appointmentForm.phone,
+          subject: 'Appointment Request with Rev. Richard',
+          message: `Preferred Date: ${appointmentForm.preferredDate}\nPreferred Time: ${appointmentForm.preferredTime}\nReason: ${appointmentForm.reason}`
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Reset form on successful submission
+        setAppointmentForm({
+          name: '',
+          email: '',
+          phone: '',
+          preferredDate: '',
+          preferredTime: '',
+          reason: ''
+        });
+        
+        setAppointmentStatus({ 
+          success: true, 
+          message: 'Your appointment request has been sent successfully! Rev. Richard will contact you soon.' 
+        });
+        
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          setIsAppointmentModalOpen(false);
+          setAppointmentStatus(null);
+        }, 2000);
+      } else {
+        setAppointmentStatus({ 
+          success: false, 
+          message: data.message || 'Failed to send appointment request. Please try again.' 
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting appointment:', error);
+      setAppointmentStatus({ 
+        success: false, 
+        message: 'Failed to connect to server. Please try again later.' 
+      });
+    } finally {
+      setIsSubmittingAppointment(false);
+    }
+  };
   
   // Mobile styles with !important flags
   const mobileStyles = {
@@ -641,31 +1117,36 @@ const Home = () => {
             </motion.div>
             
             <motion.div 
-              className="welcome-image" 
               variants={item}
               style={{
                 width: '100%',
                 maxWidth: '600px',
                 margin: '0 auto',
-                padding: '0 1rem'
+                padding: '0 1rem',
+                boxShadow: 'none !important',
+                WebkitBoxShadow: 'none !important',
+                MozBoxShadow: 'none !important',
+                filter: 'none',
+                border: 'none',
+                outline: 'none'
               }}
             >
-              <div 
-                className="image-container"
+              {/* Image Slideshow with Ken Burns Effect */}
+              <div
                 style={{
                   position: 'relative',
                   width: '100%',
-                  paddingBottom: '125%',
-                  borderRadius: '12px',
+                  paddingBottom: '60%',
+                  borderRadius: '0px',
                   overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                  maxWidth: '100%',
+                  boxShadow: 'none',
                   margin: '0 auto'
                 }}
               >
-                <img 
-                  src="/images/congregant.jpeg" 
-                  alt="St. Jude's Anglican Church community" 
+                {/* Congregant Image */}
+                <motion.img
+                  src="/images/congregant.jpeg"
+                  alt="St. Jude's Anglican Church community"
                   style={{
                     position: 'absolute',
                     top: 0,
@@ -674,10 +1155,107 @@ const Home = () => {
                     height: '100%',
                     objectFit: 'cover',
                     objectPosition: 'center',
-                    transition: 'transform 0.5s ease',
-                    ':hover': {
-                      transform: 'scale(1.03)'
-                    }
+                    boxShadow: 'none !important',
+                    WebkitBoxShadow: 'none !important',
+                    MozBoxShadow: 'none !important',
+                    filter: 'none'
+                  }}
+                  initial={{ opacity: 1, scale: 1 }}
+                  animate={{ 
+                    opacity: [1, 1, 0, 0, 0],
+                    scale: [1, 1.1, 1.1, 1, 1]
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* Kama Image */}
+                <motion.img
+                  src="/images/kama.jpeg"
+                  alt="Church activities"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    boxShadow: 'none !important',
+                    WebkitBoxShadow: 'none !important',
+                    MozBoxShadow: 'none !important',
+                    filter: 'none'
+                  }}
+                  initial={{ opacity: 0, scale: 1 }}
+                  animate={{ 
+                    opacity: [0, 0, 1, 1, 0],
+                    scale: [1, 1, 1, 1.12, 1.12]
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* Mothers Image */}
+                <motion.img
+                  src="/images/mothers.jpeg"
+                  alt="Church mothers group"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    boxShadow: 'none !important',
+                    WebkitBoxShadow: 'none !important',
+                    MozBoxShadow: 'none !important',
+                    filter: 'none'
+                  }}
+                  initial={{ opacity: 0, scale: 1 }}
+                  animate={{ 
+                    opacity: [0, 0, 0, 1, 1, 0],
+                    scale: [1, 1, 1, 1, 1.08, 1.08]
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+
+                {/* PCC Image */}
+                <motion.img
+                  src="/images/PCC.jpeg"
+                  alt="PCC activities"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    boxShadow: 'none !important',
+                    WebkitBoxShadow: 'none !important',
+                    MozBoxShadow: 'none !important',
+                    filter: 'none'
+                  }}
+                  initial={{ opacity: 0, scale: 1 }}
+                  animate={{ 
+                    opacity: [0, 0, 0, 0, 0, 1],
+                    scale: [1, 1, 1, 1, 1, 1.1]
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "easeInOut"
                   }}
                 />
               </div>
@@ -810,7 +1388,7 @@ const Home = () => {
                 color: 'rgba(37, 99, 235, 0.05)',
                 lineHeight: 1,
                 userSelect: 'none'
-              }}>01</div>
+              }}></div>
             </motion.div>
 
             {/* Belief Card 2 */}
@@ -871,7 +1449,7 @@ const Home = () => {
                 color: 'rgba(99, 102, 241, 0.05)',
                 lineHeight: 1,
                 userSelect: 'none'
-              }}>02</div>
+              }}></div>
             </motion.div>
 
             {/* Belief Card 3 */}
@@ -932,7 +1510,7 @@ const Home = () => {
                 color: 'rgba(236, 72, 153, 0.05)',
                 lineHeight: 1,
                 userSelect: 'none'
-              }}>03</div>
+              }}></div>
             </motion.div>
           </div>
 
@@ -1031,6 +1609,15 @@ const Home = () => {
               <BeliefsModal 
                 isOpen={isBeliefsModalOpen} 
                 onClose={() => setIsBeliefsModalOpen(false)} 
+              />
+              <AppointmentModal 
+                isOpen={isAppointmentModalOpen} 
+                onClose={() => setIsAppointmentModalOpen(false)}
+                formData={appointmentForm}
+                onChange={handleAppointmentChange}
+                onSubmit={handleAppointmentSubmit}
+                isSubmitting={isSubmittingAppointment}
+                status={appointmentStatus}
               />
             </div>
             <div style={{
@@ -1213,22 +1800,24 @@ const Home = () => {
                 </p>
               </div>
               
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '1rem',
-                marginTop: '1rem',
-                padding: '0.75rem 1.5rem',
-                backgroundColor: '#f1f5f9',
-                borderRadius: '50px',
-                transition: 'all 0.3s ease',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                ':hover': {
-                  backgroundColor: '#e2e8f0',
-                  transform: 'translateY(-2px)'
-                }
-              }}>
+              <div 
+                onClick={() => setIsAppointmentModalOpen(true)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  marginTop: '1rem',
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#f1f5f9',
+                  borderRadius: '50px',
+                  transition: 'all 0.3s ease',
+                  border: '1px solid #e2e8f0',
+                  cursor: 'pointer',
+                  ':hover': {
+                    backgroundColor: '#e2e8f0',
+                    transform: 'translateY(-2px)'
+                  }
+                }}>
                 <FaHandsHelping style={{ color: '#2563eb' }} />
                 <span style={{
                   fontWeight: '600',

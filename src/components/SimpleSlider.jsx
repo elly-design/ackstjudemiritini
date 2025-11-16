@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaUserFriends } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../styles/simple-slider.css';
@@ -102,6 +102,102 @@ const SamplePrevArrow = ({ className, style, onClick }) => {
 const SimpleSlider = ({ onBeliefsClick }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMembershipModalOpen, setIsMembershipModalOpen] = useState(false);
+  const [membershipForm, setMembershipForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    membershipType: 'regular',
+    previousChurch: '',
+    baptismStatus: 'not-baptized',
+    interests: []
+  });
+  const [isSubmittingMembership, setIsSubmittingMembership] = useState(false);
+  const [membershipStatus, setMembershipStatus] = useState(null);
+
+  // Handle membership form input changes
+  const handleMembershipChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      setMembershipForm(prev => ({
+        ...prev,
+        interests: checked 
+          ? [...prev.interests, value]
+          : prev.interests.filter(interest => interest !== value)
+      }));
+    } else {
+      setMembershipForm(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  // Handle membership form submission
+  const handleMembershipSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmittingMembership(true);
+    
+    try {
+      // Send membership request to backend API
+      const response = await fetch('http://localhost:5001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${membershipForm.firstName} ${membershipForm.lastName}`,
+          email: membershipForm.email,
+          phone: membershipForm.phone,
+          subject: 'Membership Application - ACK St. Jude Miritini',
+          message: `Address: ${membershipForm.address}\nMembership Type: ${membershipForm.membershipType}\nPrevious Church: ${membershipForm.previousChurch}\nBaptism Status: ${membershipForm.baptismStatus}\nInterests: ${membershipForm.interests.join(', ')}`
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        // Reset form on successful submission
+        setMembershipForm({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          address: '',
+          membershipType: 'regular',
+          previousChurch: '',
+          baptismStatus: 'not-baptized',
+          interests: []
+        });
+        
+        setMembershipStatus({ 
+          success: true, 
+          message: 'Your membership application has been submitted successfully! We will contact you soon.' 
+        });
+        
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          setIsMembershipModalOpen(false);
+          setMembershipStatus(null);
+        }, 2000);
+      } else {
+        setMembershipStatus({ 
+          success: false, 
+          message: data.message || 'Failed to submit membership application. Please try again.' 
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting membership:', error);
+      setMembershipStatus({ 
+        success: false, 
+        message: 'Failed to connect to server. Please try again later.' 
+      });
+    } finally {
+      setIsSubmittingMembership(false);
+    }
+  };
 
   useEffect(() => {
     // Preload images for smoother transitions
@@ -321,6 +417,33 @@ const SimpleSlider = ({ onBeliefsClick }) => {
                         </button>
                       );
                     }
+                    if (button.text === "I'm New Here") {
+                      return (
+                        <button
+                          key={btnIndex}
+                          onClick={() => setIsMembershipModalOpen(true)}
+                          className={`btn ${button.variant === 'primary' ? 'btn-primary' : 'btn-outline'}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            cursor: 'pointer',
+                            ...(button.variant === 'primary' ? {
+                              backgroundColor: '#4a6cf7',
+                              color: 'white',
+                              border: '2px solid #4a6cf7'
+                            } : {
+                              backgroundColor: 'transparent',
+                              color: 'white',
+                              border: '2px solid white'
+                            })
+                          }}
+                        >
+                          {button.text}
+                          {button.variant === 'primary' && <FaArrowRight className="btn-icon" />}
+                        </button>
+                      );
+                    }
                     return (
                       <Link
                         key={btnIndex}
@@ -350,6 +473,472 @@ const SimpleSlider = ({ onBeliefsClick }) => {
           );
         })}
       </Slider>
+      
+      {/* Membership Modal */}
+      <MembershipModal
+        isOpen={isMembershipModalOpen}
+        onClose={() => setIsMembershipModalOpen(false)}
+        formData={membershipForm}
+        onChange={handleMembershipChange}
+        onSubmit={handleMembershipSubmit}
+        isSubmitting={isSubmittingMembership}
+        status={membershipStatus}
+      />
+    </div>
+  );
+};
+
+// Hook to detect mobile screen size
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 640);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  return isMobile;
+};
+
+// Membership Modal Component
+const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubmitting, status }) => {
+  const [mounted, setMounted] = useState(false);
+  const modalRef = useRef(null);
+  const isMobile = useIsMobile();
+
+  // Set mounted state when component mounts
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
+  // Close modal on background click
+  const handleBackdropClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
+  if (!isOpen || !mounted) return null;
+
+  return (
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: isMobile ? 'flex-end' : 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: isMobile ? '1rem' : '1rem'
+      }}
+      onClick={handleBackdropClick}
+    >
+      <div 
+        ref={modalRef}
+        style={{
+          backgroundColor: 'white',
+          borderRadius: isMobile ? '8px' : '12px',
+          maxWidth: '600px',
+          width: '100%',
+          maxHeight: isMobile ? '95vh' : '90vh',
+          overflow: 'auto',
+          position: 'relative',
+          transform: isOpen ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
+          opacity: isOpen ? 1 : 0,
+          padding: isMobile ? '0' : '0'
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: isMobile ? '0.75rem' : '1rem',
+            right: isMobile ? '0.75rem' : '1rem',
+            background: 'none',
+            border: 'none',
+            fontSize: isMobile ? '1.25rem' : '1.5rem',
+            cursor: 'pointer',
+            color: '#64748b',
+            padding: isMobile ? '0.4rem' : '0.5rem',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.2s ease',
+            ':hover': {
+              backgroundColor: '#f1f5f9',
+              color: '#1e293b'
+            }
+          }}
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+        
+        <h2 style={{
+          fontSize: isMobile ? '1.5rem' : '2rem',
+          fontWeight: '800',
+          color: '#1e293b',
+          marginBottom: '1rem',
+          textAlign: 'center',
+          padding: isMobile ? '1.5rem 1rem 0 1rem' : '2rem 2rem 0 2rem'
+        }}>
+          <FaUserFriends style={{ marginRight: '0.5rem', color: '#2563eb' }} />
+          Join Our Church Family
+        </h2>
+        
+        <p style={{
+          color: '#64748b',
+          textAlign: 'center',
+          marginBottom: isMobile ? '1.5rem' : '2rem',
+          padding: isMobile ? '0 1rem' : '0 2rem',
+          fontSize: isMobile ? '0.9rem' : '1rem'
+        }}>
+          We're excited to welcome you to ACK St. Jude Miritini! Please fill out this form to start your membership journey.
+        </p>
+        
+        <form onSubmit={onSubmit} style={{ 
+          padding: isMobile ? '0 1rem 1rem 1rem' : '0 2rem 2rem 2rem'
+        }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
+            gap: isMobile ? '0.75rem' : '1rem', 
+            marginBottom: '1rem'
+          }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+                First Name *
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={onChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb'
+                  }
+                }}
+              />
+            </div>
+            
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+                Last Name *
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={onChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  ':focus': {
+                    outline: 'none',
+                    borderColor: '#2563eb'
+                  }
+                }}
+              />
+            </div>
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Email Address *
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={onChange}
+              required
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Phone Number *
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={onChange}
+              required
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Address
+            </label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={onChange}
+              rows={3}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                resize: 'vertical',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Membership Type *
+            </label>
+            <select
+              name="membershipType"
+              value={formData.membershipType}
+              onChange={onChange}
+              required
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            >
+              <option value="regular">Regular Member</option>
+              <option value="associate">Associate Member</option>
+              <option value="student">Student Member</option>
+              <option value="family">Family Membership</option>
+            </select>
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Previous Church (if any)
+            </label>
+            <input
+              type="text"
+              name="previousChurch"
+              value={formData.previousChurch}
+              onChange={onChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Baptism Status *
+            </label>
+            <select
+              name="baptismStatus"
+              value={formData.baptismStatus}
+              onChange={onChange}
+              required
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                ':focus': {
+                  outline: 'none',
+                  borderColor: '#2563eb'
+                }
+              }}
+            >
+              <option value="not-baptized">Not Baptized</option>
+              <option value="baptized">Already Baptized</option>
+              <option value="interested">Interested in Baptism</option>
+            </select>
+          </div>
+          
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151', fontWeight: '600' }}>
+              Areas of Interest
+            </label>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
+              gap: isMobile ? '0.75rem' : '0.5rem'
+            }}>
+              {['Sunday School', 'Youth Ministry', 'Women\'s Ministry', 'Men\'s Ministry', 'Choir/Music', 'Community Service', 'Bible Study', 'Prayer Group'].map(interest => (
+                <label key={interest} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input
+                    type="checkbox"
+                    name="interests"
+                    value={interest}
+                    checked={formData.interests.includes(interest)}
+                    onChange={onChange}
+                    style={{ margin: 0 }}
+                  />
+                  <span style={{ fontSize: '0.9rem', color: '#374151' }}>{interest}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          
+          {status && (
+            <div style={{
+              padding: '1rem',
+              borderRadius: '8px',
+              marginBottom: '1rem',
+              backgroundColor: status.success ? '#dcfce7' : '#fee2e2',
+              color: status.success ? '#166534' : '#dc2626',
+              border: `1px solid ${status.success ? '#bbf7d0' : '#fecaca'}`,
+              textAlign: 'center'
+            }}>
+              {status.message}
+            </div>
+          )}
+          
+          <div style={{
+            display: 'flex',
+            gap: isMobile ? '0.75rem' : '1rem',
+            justifyContent: 'flex-end',
+            flexDirection: isMobile ? 'column' : 'row',
+            marginBottom: isMobile ? '1rem' : '0'
+          }}>
+            <button 
+              type="button"
+              onClick={onClose}
+              disabled={isSubmitting}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: isMobile ? '0.75rem 1rem' : '0.75rem 1.75rem',
+                backgroundColor: 'transparent',
+                color: '#2563eb',
+                border: '2px solid #2563eb',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                opacity: isSubmitting ? 0.5 : 1,
+                width: '100%',
+                justifyContent: 'center',
+                ':hover': {
+                  backgroundColor: isSubmitting ? 'transparent' : 'rgba(37, 99, 235, 0.05)',
+                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                }
+              }}
+            >
+              Cancel
+            </button>
+            
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: isMobile ? '0.75rem 1rem' : '0.75rem 1.75rem',
+                backgroundColor: isSubmitting ? '#94a3b8' : '#2563eb',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                opacity: isSubmitting ? 0.7 : 1,
+                width: '100%',
+                justifyContent: 'center',
+                ':hover': {
+                  backgroundColor: isSubmitting ? '#94a3b8' : '#1d4ed8',
+                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                }
+              }}
+            >
+              {isSubmitting ? 'Submitting...' : 'Join Our Family'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
