@@ -847,7 +847,7 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
               gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
               gap: isMobile ? '0.75rem' : '0.5rem'
             }}>
-              {['Sunday School', 'Youth Ministry', 'Women\'s Ministry', 'Men\'s Ministry', 'Choir/Music', 'Community Service', 'Bible Study', 'Prayer Group'].map(interest => (
+              {['Sunday School', 'Youth Ministry', 'Women\'s Ministry', 'Men\'s Ministry', 'Choir/Music'].map(interest => (
                 <label key={interest} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <input
                     type="checkbox"
