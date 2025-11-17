@@ -2020,7 +2020,7 @@ const Home = () => {
               position: 'relative',
               zIndex: 2
             }}>
-              "When God speaks, hope is restored, faith is ignited and destinies are rewritten by His power."
+              "In God's hands, shattered lives find healing, weary souls find strength and every dawn carries the promise of His glory."
             </h2>
             <p className="cta-text" style={{
               fontSize: '1.1rem',
@@ -2032,7 +2032,7 @@ const Home = () => {
               zIndex: 2,
               fontStyle: 'italic'
             }}>
-              "The grass withers, the flower fades, but the word of our God stands forever." Isaiah 40:8
+              "Those who hope in the Lord will renew their strength.”  Isaiah 40:31
             </p>
           </div>
         </div>
