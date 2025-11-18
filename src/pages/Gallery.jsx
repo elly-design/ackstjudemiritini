@@ -13,13 +13,13 @@ const Gallery = () => {
     },
     {
       id: 1,
-      title: 'Mothers Union',
+      title: 'Mother\'s Union',
       coverImage: '/images/mothers.jpeg',
       date: '2023-11-05',
     },
     {
       id: 2,
-      title: 'MU Fellowship',
+      title: 'M.U Fellowship',
       coverImage: '/images/mu.jpeg',
       date: '2023-10-29',
     },
@@ -31,7 +31,7 @@ const Gallery = () => {
     },
     {
       id: 4,
-      title: 'Childrens Ministry',
+      title: 'Children\'s Ministry',
       coverImage: '/images/child.jpeg',
       date: '2023-10-15',
     },
