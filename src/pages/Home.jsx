@@ -1694,7 +1694,7 @@ const Home = () => {
               }}
             >
               <img 
-                src="/images/richard.jpg" 
+                src="images/canonrev.jpg" 
                 alt="Rev. Canon Richard Otieno"
                 style={{
                   width: '100%',
