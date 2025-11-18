@@ -146,7 +146,7 @@ const Give = () => {
 
         <div className="giving-note">
           <p>Thank you for your generous giving. Your support helps us continue our mission and ministry.</p>
-          <p>For any assistance, please contact us at <a href="tel:+254745002529">+254 745 002 529</a> or <a href="mailto:ackstjudemiritinichuch@gmail.com">ackstjudemiritinichuch@gmail.com</a></p>
+          <p>For any assistance, please contact us at <a href="tel:+254745002529">+254 745 002 529</a>, <a href="mailto:ackstjudemiritinichuch@gmail.com">ackstjudemiritinichuch@gmail.com</a> or <a href="mailto:revotieno4christ@gmail.com">revotieno4christ@gmail.com</a></p>
         </div>
       </div>
     </div>
