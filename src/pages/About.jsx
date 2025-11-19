@@ -751,7 +751,7 @@ In Christ, we live by faith, walk in power and shine His light to the world.
                 </div>
                 <div className="staff-details">
                   <h4>Ms. Diana Dawa</h4>
-                  <span className="staff-role">Ofiice Administrator</span>
+                  <span className="staff-role">Office Administrator</span>
                   <div className="staff-social">
                     <a href="#" aria-label="Email"><i className="fas fa-envelope"></i></a>
                     <a href="#" aria-label="Phone"><i className="fas fa-phone"></i></a>
