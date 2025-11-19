@@ -367,7 +367,7 @@ const AppointmentModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSub
           position: 'relative',
           paddingBottom: '1rem'
         }}>
-          Schedule a Meeting
+          ACK St. Jude Miritini Parish 
           <div style={{
             position: 'absolute',
             bottom: 0,
@@ -386,7 +386,7 @@ const AppointmentModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSub
           marginBottom: '1.5rem',
           fontSize: '1.1rem'
         }}>
-          Request an appointment with Rev. Richard
+          Request an appointment with Rev. Canon Richard Otieno
         </p>
 
         {status && (
@@ -584,7 +584,7 @@ const AppointmentModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSub
                 onChange={onChange}
                 required
                 rows={4}
-                placeholder="Please describe why you'd like to meet with Rev. Richard..."
+                placeholder="Please describe why you'd like to meet with Rev. Canon  Richard..."
                 style={{
                   width: '100%',
                   padding: '0.75rem',
