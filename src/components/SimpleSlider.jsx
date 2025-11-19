@@ -567,11 +567,11 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
         ref={modalRef}
         style={{
           backgroundColor: 'white',
-          borderRadius: isMobile ? '8px' : '12px',
+          borderRadius: isMobile ? '8px 8px 0 0' : '12px',
           maxWidth: '600px',
           width: '100%',
-          height: isMobile ? '70vh' : 'auto',
-          maxHeight: isMobile ? '70vh' : '85vh',
+          height: isMobile ? 'calc(70vh - 80px)' : 'auto',
+          maxHeight: isMobile ? 'calc(70vh - 80px)' : '85vh',
           overflowY: 'auto',
           overflowX: 'hidden',
           position: 'relative',
@@ -622,8 +622,9 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
           Join Our Church Family
         </h2>
         
+        
         <p style={{
-          color: '#64748b',
+          color: '#6b7280',
           textAlign: 'center',
           marginBottom: isMobile ? '1.5rem' : '2rem',
           padding: isMobile ? '0 1rem' : '0 2rem',
@@ -854,13 +855,9 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
             gap: isMobile ? '0.75rem' : '1rem',
             justifyContent: 'center',
             flexDirection: isMobile ? 'column' : 'row',
-            marginTop: '1rem',
-            marginBottom: '0',
-            position: 'sticky',
-            bottom: '0',
-            backgroundColor: 'white',
-            padding: '1rem 0',
-            zIndex: 10
+            marginTop: '2rem',
+            marginBottom: '1rem',
+            padding: isMobile ? '0 1rem' : '0 2rem'
           }}>
             <button 
               type="button"
@@ -869,20 +866,24 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                padding: isMobile ? '0.75rem 1rem' : '0.75rem 1.75rem',
+                padding: isMobile ? '0.875rem 1.25rem' : '0.875rem 2rem',
                 backgroundColor: 'transparent',
                 color: '#2563eb',
                 border: '2px solid #2563eb',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 fontWeight: '600',
+                fontSize: isMobile ? '0.95rem' : '1rem',
                 cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                 opacity: isSubmitting ? 0.5 : 1,
                 width: '100%',
                 justifyContent: 'center',
+                letterSpacing: '0.025em',
                 ':hover': {
-                  backgroundColor: isSubmitting ? 'transparent' : 'rgba(37, 99, 235, 0.05)',
-                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                  backgroundColor: isSubmitting ? 'transparent' : 'rgba(37, 99, 235, 0.08)',
+                  transform: isSubmitting ? 'none' : 'translateY(-1px)',
+                  borderColor: isSubmitting ? '#2563eb' : '#1d4ed8',
+                  boxShadow: isSubmitting ? 'none' : '0 4px 12px rgba(37, 99, 235, 0.15)'
                 }
               }}
             >
@@ -895,20 +896,24 @@ const MembershipModal = ({ isOpen, onClose, formData, onChange, onSubmit, isSubm
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                padding: isMobile ? '0.75rem 1rem' : '0.75rem 1.75rem',
+                padding: isMobile ? '0.875rem 1.25rem' : '0.875rem 2rem',
                 backgroundColor: isSubmitting ? '#94a3b8' : '#2563eb',
                 color: 'white',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 fontWeight: '600',
+                fontSize: isMobile ? '0.95rem' : '1rem',
                 cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                 opacity: isSubmitting ? 0.7 : 1,
                 width: '100%',
                 justifyContent: 'center',
+                letterSpacing: '0.025em',
+                boxShadow: isSubmitting ? 'none' : '0 4px 14px rgba(37, 99, 235, 0.3)',
                 ':hover': {
                   backgroundColor: isSubmitting ? '#94a3b8' : '#1d4ed8',
-                  transform: isSubmitting ? 'none' : 'translateY(-2px)'
+                  transform: isSubmitting ? 'none' : 'translateY(-1px)',
+                  boxShadow: isSubmitting ? 'none' : '0 6px 20px rgba(37, 99, 235, 0.4)'
                 }
               }}
             >
