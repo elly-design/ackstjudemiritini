@@ -1571,7 +1571,7 @@ const Home = () => {
               marginLeft: 'auto',
               marginRight: 'auto'
             }}>
-              Our ongoing church development projects are expressions of our shared vision to make God's house a place of excellence, outreach and impact. We invite you to be part of this divine mission through your thanksgiving, tithes, offerings, and development donations.
+              Our ongoing church development projects are expressions of our shared vision to make God's house a place of excellence, outreach and impact. We invite you to be part of this divine mission through your thanksgiving, tithes, offerings and development donations.
             </p>
             <div style={{
               display: 'flex',
@@ -1787,7 +1787,7 @@ const Home = () => {
                   borderLeft: '2px solid #e2e8f0',
                   fontStyle: 'italic'
                 }}>
-                  "It is with great joy that I welcome you to our church family, where we grow together in God's love and grace."
+                  "Beloved in Christ, welcome to our church family. Here, we are committed to growing in faith, walking in love and standing together in unity."
                 </p>
               </div>
               
@@ -1802,7 +1802,7 @@ const Home = () => {
                   paddingLeft: '0',
                   textIndent: '0'
                 }}>
-                  Whether you're visiting for the first time or have been with us for years, you are an important part of our church family.
+                  This is a place where hope is renewed, lives are transformed and every person is valued. I warmly invite you to worship with us, join a home fellowship and be part of what God is doing in our community.
                 </p>
                 
                 <p style={{
@@ -1813,7 +1813,7 @@ const Home = () => {
                   paddingLeft: '0',
                   textIndent: '0'
                 }}>
-                  Our doors are always open to you as we worship, serve and grow together in our journey of faith.
+                  Through our shared prayers, service, tithes, thanksgiving and support for church projects, we build a stronger, caring and generous church that reflects Christ's heart. May you find belonging, purpose and encouragement as we journey together in God's love.
                 </p>
               </div>
               
