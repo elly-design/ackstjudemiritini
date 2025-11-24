@@ -512,15 +512,16 @@ const About = () => {
           <div className="welcome-content">
             <div className="welcome-text">
               <p>
-                ACK St. Jude was founded in 1975 with a vision to be a beacon of hope and transformation in our community. 
-                What began as a small gathering of believers has grown into a vibrant faith community impacting lives across 
-                our city and beyond.
+               ACK St. Jude was founded in 1975 with a vision to become a beacon of hope and transformation within our community. 
+               What began as a small gathering of devoted believers has grown into a vibrant and dynamic faith community, 
+               impacting lives across our city and beyond.
               </p>
               <p>
-                We are a Bible-believing, Christ-centered church affiliated with the Anglican Church of Kenya, 
-                Diocese of Mombasa. Our mission is to make disciples of Jesus Christ who love God, love people 
-                and serve the world with compassion and excellence.
-              </p>
+               We are a Bible-believing, Christ-centered church under the Anglican Church of Kenya, 
+               Diocese of Mombasa led by Rt. Rev. Dr. Alphonce Mwaro Baya, our Diocesan Bishop. 
+               Our mission is to make disciples of Jesus Christ who love God, love people, and serve 
+               the world with compassion and excellence.
+               </p>
               <div className="mission-vision">
                 <div className="mission-box">
                   <GiChurch className="icon" />
